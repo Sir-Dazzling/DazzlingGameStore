@@ -89,7 +89,7 @@ const Header = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 16px 32px 0 32px;
+  margin: 40px 32px 0 32px;
 `;
 
 const Avatar = styled.Image`

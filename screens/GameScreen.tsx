@@ -27,11 +27,11 @@ export default function GameScreen({ route, navigation }: any)
 
     return (
         <GameContainer>
-            <StatusBar barStyle="light-content" />
+            <StatusBar style="light" />
 
             <GameArtContainer>
                 <GameArt source={game.cover} />
-                <BackButton>
+                <BackButton onPress={() => navigation.goBack()}>
                     <Ionicons name="ios-close" size={40} color="#ffffff" />
                 </BackButton>
             </GameArtContainer>
@@ -58,11 +58,28 @@ export default function GameScreen({ route, navigation }: any)
                 <Text bold color="#9a9a9a">{game.age}</Text>
                 <Text bold color="#9a9a9a">Game of the day</Text>
             </GameStatsContainer>
+
+            <ScreenShotsContainer>
+                <ScreenShots horizontal={true} showsHorizontalScrollIndicator={false}>
+                    {game.screenshots.map((screenshot: string, index: number) =>
+                    {
+                        return (
+                            <ScreenShotContainer key={index}>
+                                <ScreenShot source={screenshot} />
+                            </ScreenShotContainer>
+                        );
+                    })}
+                </ScreenShots>
+            </ScreenShotsContainer>
+
+            <Description medium color="#9a9a9a">
+                {game.description}
+            </Description>
         </GameContainer>
     );
 }
 
-const GameContainer = styled.View`
+const GameContainer = styled.ScrollView`
     background-color: #343434;
     flex: 1;
 `;
@@ -127,4 +144,29 @@ const GameStatsContainer = styled.View`
 
 const Stars = styled.View`
     flex-direction: row;
+    shadow-color: #000000;
+    shadow-offset: 1px 1px;
+    shadow-opacity: 0.5;
+    shadow-radius: 2px;
+`;
+
+const ScreenShotsContainer = styled.View`
+    margin: 8px 0;
+`;
+
+const ScreenShots = styled.ScrollView``;
+
+const ScreenShotContainer = styled.View`
+    padding: 16px;
+`;
+
+const ScreenShot = styled.Image`
+    height: 200px;
+    width: 300px;
+    border-radius: 12px;
+`;
+
+const Description = styled(Text)`
+    margin: 0px 16px 30px 16px;
+    line-height: 22px;
 `;

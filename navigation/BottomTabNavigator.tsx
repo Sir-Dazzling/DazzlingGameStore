@@ -97,14 +97,13 @@ function RootNavigator()
         component={HomeScreen}
         options={{
           headerTitle: 'Home',
-          headerShown: true,
+          headerShown: false,
           headerStyle: {
-            backgroundColor: "#343434"
+            backgroundColor: "#343434",
           },
           headerTitleStyle: {
-            color: "#ffffff"
+            color: "#ffffff",
           }
-
         }}
 
       />
@@ -121,7 +120,16 @@ function LiveNavigator()
       <LiveStack.Screen
         name="LiveScreen"
         component={LiveScreen}
-        options={{ headerTitle: 'Live' }}
+        options={{
+          headerTitle: 'Live',
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: "#343434"
+          },
+          headerTitleStyle: {
+            color: "#ffffff"
+          }
+        }}
       />
     </LiveStack.Navigator>
   );
