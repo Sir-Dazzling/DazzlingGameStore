@@ -2,6 +2,7 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
+import GameScreen from '../screens/GameScreen';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -28,8 +29,9 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator()
 {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={BottomTabNavigator} />
+    <Stack.Navigator mode="modal" headerMode="none">
+      <Stack.Screen name="root" component={BottomTabNavigator} />
+      <Stack.Screen name="GameScreen" component={GameScreen} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );

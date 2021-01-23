@@ -1,13 +1,15 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import styled from 'styled-components/native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import HomeScreen from '../screens/HomeScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import LiveScreen from '../screens/LiveScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import { BottomTabParamList, TabOneParamList, TabThreeParamList, TabTwoParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -18,20 +20,58 @@ export default function BottomTabNavigator()
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{
+        activeTintColor: Colors[colorScheme].tint,
+        showLabel: false,
+        style: {
+          backgroundColor: "#343434",
+          borderTopColor: "#343434",
+          paddingBottom: 12
+        }
+      }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) =>
+        {
+          let iconName: string | any;
+
+          switch (route.name)
+          {
+            case "Home":
+              iconName = "home";
+              break;
+
+            case "Live":
+              iconName = "game-controller";
+              break;
+
+            case "Profile":
+              iconName = "user";
+              break;
+
+            default:
+              iconName = "home";
+              break;
+          }
+
+          return (
+            <TabBarIconContainer focused={focused}>
+              <Entypo name={iconName} size={24} color="#ffffff" />
+            </TabBarIconContainer>
+          );
+        }
+      })}
+    >
       <BottomTab.Screen
         name="Home"
-        component={HomeNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }}
+        component={RootNavigator}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }}
+        name="Live"
+        component={LiveNavigator}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileNavigator}
       />
     </BottomTab.Navigator>
   );
@@ -46,13 +86,13 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const RootStack = createStackNavigator<TabOneParamList>();
 
-function HomeNavigator()
+function RootNavigator()
 {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
+    <RootStack.Navigator>
+      <RootStack.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{
@@ -68,21 +108,42 @@ function HomeNavigator()
         }}
 
       />
-    </TabOneStack.Navigator>
+    </RootStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const LiveStack = createStackNavigator<TabTwoParamList>();
 
-function TabTwoNavigator()
+function LiveNavigator()
 {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+    <LiveStack.Navigator>
+      <LiveStack.Screen
+        name="LiveScreen"
+        component={LiveScreen}
+        options={{ headerTitle: 'Live' }}
       />
-    </TabTwoStack.Navigator>
+    </LiveStack.Navigator>
   );
 }
+
+const ProfileStack = createStackNavigator<TabThreeParamList>();
+
+function ProfileNavigator()
+{
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{ headerTitle: 'Profile' }}
+      />
+    </ProfileStack.Navigator>
+  );
+};
+
+const TabBarIconContainer = styled.View`
+  background-color: ${(props: any) => (props.focused ? "#819ee5" : "#343434")};
+  padding: 2px 16px;
+  border-radius: 32px;
+`;
