@@ -55,7 +55,18 @@ function HomeNavigator()
       <TabOneStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'Home Title' }}
+        options={{
+          headerTitle: 'Home',
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: "#343434"
+          },
+          headerTitleStyle: {
+            color: "#ffffff"
+          }
+
+        }}
+
       />
     </TabOneStack.Navigator>
   );

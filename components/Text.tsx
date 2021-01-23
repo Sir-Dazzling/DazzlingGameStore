@@ -7,7 +7,7 @@ const TextStyle = ({ ...props }) =>
 };
 
 const Text = styled.Text`
-    font-family: "Avenir Next";
+    font-family: "space-mono";
     color: ${(props: any) => props.color ?? "#ffffff"};
 
     ${({ title, large, medium, small }: any) =>
